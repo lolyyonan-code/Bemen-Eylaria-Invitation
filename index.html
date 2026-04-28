@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف بيمن وايلاريا</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&display=swap');
+
+        :root {
+            --primary-pink: #f8d7da; /* بينك هادئ */
+            --accent-pink: #e4a1a1;  /* بينك مودرن */
+            --text-color: #5d4037;
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #ffffff 0%, #fdf5f6 100%);
+            font-family: 'Amiri', serif;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 90%;
+            margin: 50px auto;
+            background: var(--white);
+            padding: 40px 20px;
+            border-radius: 50px 50px 0 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--primary-pink);
+            position: relative;
+        }
+
+        .verse {
+            font-size: 1.1rem;
+            color: var(--accent-pink);
+            font-style: italic;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2.8rem;
+            margin: 10px 0;
+            color: var(--accent-pink);
+        }
+
+        .names {
+            font-size: 2.2rem;
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+
+        .details-box {
+            background-color: #fff9f9;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .time-unit {
+            background: var(--primary-pink);
+            padding: 10px;
+            border-radius: 10px;
+            min-width: 60px;
+        }
+
+        .time-unit span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .btn-location {
+            display: inline-block;
+            background: var(--accent-pink);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 10px 5px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .btn-location:hover {
+            opacity: 0.8;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: var(--accent-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="verse">
+            "فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ" (مت 19: 5-6)
+        </div>
+        
+        <h1>دعوة زفاف</h1>
+        
+        <div class="names">
+            بيمن & ايلاريا
+        </div>
+
+        <div class="details-box">
+            <p style="font-size: 1.3rem;">يتشرفون بدعوتكم لحضور حفل الزفاف</p>
+            <p>الخميس 17 سبتمبر 2026</p>
+            <p>الساعة 8:00 مساءً</p>
+            
+            <p><b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
+            <a href="http://maps.google.com/?q=كنيسة رئيس الملائكة ميخائيل" class="btn-location">لوكيشن الكنيسة</a>
+            
+            <p style="margin-top:20px;"><b>السهرة:</b> قاعة رويال بلازا (دار ضباط الأمن المركزي)</p>
+            <a href="http://maps.google.com/?q=قاعة رويال بلازا" class="btn-location">لوكيشن القاعة</a>
+        </div>
+
+        <div id="timer" class="countdown">
+            <div class="time-unit"><span id="days">0</span>أيام</div>
+            <div class="time-unit"><span id="hours">0</span>ساعة</div>
+            <div class="time-unit"><span id="minutes">0</span>دقيقة</div>
+        </div>
+
+        <div class="footer">حضوركم يتمم فرحتنا ✨</div>
+    </div>
+
+    <script>
+        const weddingDate = new Date("Sept 17, 2026 20:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "اليوم هو اليوم المنشود!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
