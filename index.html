@@ -13,7 +13,7 @@
             --text-color: #5d4037;
         }
 
-        body, html { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Amiri', serif; background: #fff9f9; }
+        body, html { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Amiri', serif; background: #fffcfc; }
 
         /* الشاشة الافتتاحية */
         #splash-screen {
@@ -23,39 +23,34 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: 1s ease-in-out;
+            transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
         .split-left, .split-right {
             position: absolute;
-            top: 0; width: 50%; height: 100%;
-            background: #fff;
-            transition: 1s ease-in-out;
-            border: 1px solid var(--primary-pink);
+            top: 0; width: 50.5%; height: 100%;
+            background: white;
+            transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
         }
-        .split-left { left: 0; }
-        .split-right { right: 0; }
+        .split-left { left: 0; border-right: 1px solid var(--primary-pink); }
+        .split-right { right: 0; border-left: 1px solid var(--primary-pink); }
 
         .open-btn {
             z-index: 1001;
-            padding: 15px 40px;
+            padding: 15px 45px;
             background: var(--accent-pink);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 1.3rem;
-            box-shadow: 0 5px 20px rgba(228, 161, 161, 0.4);
+            font-size: 1.4rem;
+            box-shadow: 0 10px 25px rgba(228, 161, 161, 0.4);
             font-family: 'Reem Kufi', sans-serif;
+            transition: 0.3s;
         }
 
-        /* تساقط الورد */
-        .flower {
-            position: fixed;
-            top: -10%;
-            z-index: 999;
-            animation: fall linear forwards;
-        }
+        /* الورد المتساقط */
+        .flower { position: fixed; top: -10%; z-index: 999; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
         /* المحتوى الرئيسي */
@@ -66,6 +61,7 @@
             align-items: center;
             padding: 40px 20px;
             transition: 2s;
+            visibility: hidden;
         }
 
         .container {
@@ -75,76 +71,47 @@
             padding: 40px 20px;
             border-radius: 30px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
             border: 1px solid var(--primary-pink);
         }
 
-        .names { font-family: 'Reem Kufi', sans-serif; font-size: 2.5rem; color: var(--accent-pink); margin: 20px 0; }
+        .names { font-family: 'Reem Kufi', sans-serif; font-size: 2.8rem; color: var(--accent-pink); margin: 20px 0; }
 
-        /* العد التنازلي */
         .countdown { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
-        .time-unit { background: var(--primary-pink); padding: 10px; border-radius: 12px; min-width: 60px; }
-        .time-unit span { display: block; font-size: 1.5rem; font-weight: bold; color: var(--text-color); }
-
-        /* قسم التهنئة */
-        .guestbook {
-            margin-top: 40px;
-            background: #fff;
-            padding: 25px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px dashed var(--accent-pink);
-        }
-        input, textarea {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid var(--primary-pink);
-            border-radius: 10px;
-            font-family: 'Amiri', serif;
-        }
-        .submit-btn {
-            background: var(--accent-pink);
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
+        .time-unit { background: var(--primary-pink); padding: 12px; border-radius: 15px; min-width: 65px; }
+        .time-unit span { display: block; font-size: 1.6rem; font-weight: bold; color: var(--text-color); }
 
         /* حالة الفتح */
         .opened .split-left { transform: translateX(-100%); }
         .opened .split-right { transform: translateX(100%); }
-        .opened .main-content { opacity: 1; }
-        .opened .open-btn { display: none; }
+        .opened .main-content { opacity: 1; visibility: visible; }
+        .opened .open-btn { opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
 
     <audio id="bgMusic" loop>
-        <source src="https://www.mboxdrive.com/tamer.mp3" type="audio/mpeg">
+        <source src="https://files.catbox.moe/kuz9n0.mp3" type="audio/mpeg">
     </audio>
 
     <div id="splash-screen">
         <div class="split-left"></div>
         <div class="split-right"></div>
-        <button class="open-btn" onclick="openInvitation()">اضغطي لفتح الدعوة 🌸</button>
+        <button class="open-btn" onclick="openInvitation()">دعوة من القلب.. افتحيها 🌸</button>
     </div>
 
     <div class="main-content">
         <div class="container">
-            <p style="color: var(--accent-pink); font-style: italic;">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ" (مت 19: 5-6)</p>
+            <p style="color: var(--accent-pink); font-size: 1.2rem;">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"</p>
             
-            <h1>فرحة بيمن & ايلاريا</h1>
-            
+            <h2 style="font-weight: normal; margin-top: 30px;">فرحة العمر</h2>
             <div class="names">بيمن & ايلاريا</div>
 
-            <div style="line-height: 1.8; color: var(--text-color);">
+            <div style="line-height: 1.8; font-size: 1.2rem;">
                 <p>الخميس 17 سبتمبر 2026</p>
                 <p>الساعة 8:00 مساءً</p>
-                <p>📌 <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
-                <p>🏛️ <b>السهرة:</b> قاعة رويال بلازا (دار ضباط الأمن المركزي)</p>
+                <p>📍 <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
+                <p>🏨 <b>السهرة:</b> قاعة رويال بلازا</p>
             </div>
 
             <div id="timer" class="countdown">
@@ -153,41 +120,45 @@
                 <div class="time-unit"><span id="minutes">0</span>دقيقة</div>
             </div>
 
-            <p style="font-size: 1.2rem; color: var(--accent-pink);">حضوركم يتمم فرحتنا ✨</p>
+            <p style="color: var(--accent-pink); font-size: 1.3rem;">حضوركم يتمم فرحتنا ✨</p>
         </div>
-
-        
+    </div>
 
     <script>
         function openInvitation() {
             document.body.classList.add('opened');
-            document.getElementById('bgMusic').play(); // تشغيل الأغنية
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(e => console.log("الموسيقى جاهزة عند التفاعل"));
+            
             setTimeout(() => {
                 document.getElementById('splash-screen').style.display = 'none';
-            }, 1000);
+            }, 1200);
         }
 
         // تساقط الورد
         function createFlower() {
             const flower = document.createElement('div');
             flower.classList.add('flower');
-            flower.innerHTML = '🌸';
+            const flowers = ['🌸', '🌷', '🤍'];
+            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
             flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.animationDuration = Math.random() * 3 + 2 + 's';
+            flower.style.animationDuration = Math.random() * 3 + 3 + 's';
             flower.style.fontSize = Math.random() * 10 + 15 + 'px';
             document.body.appendChild(flower);
-            setTimeout(() => flower.remove(), 5000);
+            setTimeout(() => flower.remove(), 6000);
         }
-        setInterval(createFlower, 300);
+        setInterval(createFlower, 400);
 
         // العد التنازلي
         const weddingDate = new Date("Sept 17, 2026 20:00:00").getTime();
         setInterval(function() {
             const now = new Date().getTime();
             const distance = weddingDate - now;
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            if (distance > 0) {
+                document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            }
         }, 1000);
     </script>
 </body>
