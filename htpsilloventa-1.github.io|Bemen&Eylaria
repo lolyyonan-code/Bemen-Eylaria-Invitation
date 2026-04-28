@@ -1,1 +1,63 @@
-# Bemen-Eylaria-Invitation
+import { useEffect, useState } from 'react'
+
+export default function WeddingInvitationSite() { const weddingDate = new Date('2026-09-17T20:00:00') const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 }) const [opened, setOpened] = useState(false)
+
+useEffect(() => { const timer = setInterval(() => { const now = new Date() const diff = weddingDate - now if (diff > 0) { setTimeLeft({ days: Math.floor(diff / (1000 * 60 * 60 * 24)), hours: Math.floor((diff / (1000 * 60 * 60)) % 24), minutes: Math.floor((diff / (1000 * 60)) % 60), seconds: Math.floor((diff / 1000) % 60), }) } }, 1000) return () => clearInterval(timer) }, [])
+
+const FloatingRoses = () => ( <div className="pointer-events-none fixed inset-0 overflow-hidden"> {Array.from({ length: 18 }).map((_, i) => ( <span key={i} className="absolute text-pink-300 opacity-40 animate-bounce" style={{ left: ${Math.random() * 100}%, top: ${Math.random() * 100}%, animationDuration: ${6 + Math.random() * 6}s, fontSize: ${14 + Math.random() * 18}px, }} > 🌸 </span> ))} </div> )
+
+if (!opened) { return ( <div className="h-screen bg-gradient-to-b from-pink-100 to-white flex flex-col items-center justify-center text-center px-6 relative overflow-hidden"> <FloatingRoses /> <p className="tracking-[0.4em] uppercase mb-4 text-lg">Wedding Invitation</p> <h1 className="text-5xl md:text-7xl font-bold text-pink-400 mb-6">Bemen & Eylaria</h1> <p className="italic text-xl mb-10">September 17, 2026</p> <button onClick={() => setOpened(true)} className="px-10 py-4 rounded-full bg-pink-200 shadow-2xl hover:scale-105 transition text-lg"> Open Our Invitation </button> </div> ) }
+
+return ( <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white text-gray-700 font-serif relative overflow-hidden"> <FloatingRoses />
+
+<audio autoPlay loop>
+    <source src="https://dl.sndup.net/j4k9/%D9%81%D9%8A%20%D9%82%D8%B5%D8%B1%20%D8%A8%D8%B9%D9%8A%D8%AF.mp3" />
+  </audio>
+
+  <section className="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+    <p className="text-lg tracking-[0.4em] uppercase mb-4">Wedding Invitation</p>
+    <h1 className="text-5xl md:text-7xl font-bold text-pink-400 mb-4">Bemen & Eylaria</h1>
+    <p className="text-xl md:text-2xl italic mb-8">Together with their families invite you to celebrate their wedding day</p>
+    <div className="text-2xl md:text-3xl font-semibold">17 September 2026</div>
+  </section>
+
+  <section className="py-20 px-6 text-center">
+    <h2 className="text-4xl font-semibold text-pink-400 mb-8">Countdown To Forever</h2>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+      {['Days','Hours','Minutes','Seconds'].map((label, i) => (
+        <div key={label} className="bg-white rounded-3xl shadow-2xl p-8">
+          <div className="text-4xl font-bold text-pink-400">
+            {Object.values(timeLeft)[i]}
+          </div>
+          <div className="mt-2">{label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section className="py-20 px-6 text-center">
+    <h2 className="text-4xl font-semibold text-pink-400 mb-8">The Ceremony</h2>
+    <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl p-8 space-y-5">
+      <p className="text-2xl">17 / 9 / 2026</p>
+      <p className="text-xl text-pink-400">8:00 PM</p>
+      <p className="text-lg">كنيسة رئيس الملائكة ميخائيل</p>
+      <a href="https://maps.app.goo.gl/dkr25pM3ahtUpcbQ9" target="_blank" className="inline-block px-6 py-3 rounded-full bg-pink-200 shadow">
+        Church Location
+      </a>
+      <p className="text-lg mt-6">قاعة رويال بلازا - دار الضباط الأمن المركزي</p>
+      <a href="https://maps.app.goo.gl/PeWPoRHqrrmeuEEKA" target="_blank" className="inline-block px-6 py-3 rounded-full bg-pink-200 shadow">
+        Hall Location
+      </a>
+    </div>
+  </section>
+
+  <section className="py-20 text-center">
+    <p className="max-w-3xl mx-auto text-2xl italic text-pink-400 leading-10">
+      “فالذي جمعه الله لا يفرقه إنسان”
+    </p>
+    <p className="mt-4 text-lg">Matthew 19:5-6</p>
+    <p className="mt-12 text-xl italic">With Love, Awaiting Your Presence</p>
+  </section>
+</div>
+
+) }
