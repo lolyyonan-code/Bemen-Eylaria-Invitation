@@ -8,161 +8,53 @@
         @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&display=swap');
 
         :root {
-            --primary-pink: #f8d7da; /* بينك هادئ */
-            --accent-pink: #e4a1a1;  /* بينك مودرن */
+            --primary-pink: #f8d7da;
+            --accent-pink: #e4a1a1;
             --text-color: #5d4037;
-            --white: #ffffff;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(circle, #ffffff 0%, #fdf5f6 100%);
-            font-family: 'Amiri', serif;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        body, html { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Amiri', serif; background: #fffcfc; }
 
-        .container {
-            max-width: 500px;
-            width: 90%;
-            margin: 50px auto;
-            background: var(--white);
-            padding: 40px 20px;
-            border-radius: 50px 50px 0 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            text-align: center;
-            border: 1px solid var(--primary-pink);
-            position: relative;
-        }
-
-        .verse {
-            font-size: 1.1rem;
-            color: var(--accent-pink);
-            font-style: italic;
-            margin-bottom: 30px;
-            padding: 0 20px;
-        }
-
-        h1 {
-            font-family: 'Reem Kufi', sans-serif;
-            font-size: 2.8rem;
-            margin: 10px 0;
-            color: var(--accent-pink);
-        }
-
-        .names {
-            font-size: 2.2rem;
-            margin: 20px 0;
-            letter-spacing: 2px;
-        }
-
-        .details-box {
-            background-color: #fff9f9;
-            padding: 20px;
-            border-radius: 20px;
-            margin: 30px 0;
-        }
-
-        .countdown {
+        /* الشاشة الافتتاحية */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1000;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
+            align-items: center;
+            transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        .time-unit {
-            background: var(--primary-pink);
-            padding: 10px;
-            border-radius: 10px;
-            min-width: 60px;
+        .split-left, .split-right {
+            position: absolute;
+            top: 0; width: 50.5%; height: 100%;
+            background: white;
+            transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+        .split-left { left: 0; border-right: 1px solid var(--primary-pink); }
+        .split-right { right: 0; border-left: 1px solid var(--primary-pink); }
 
-        .time-unit span {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .btn-location {
-            display: inline-block;
+        .open-btn {
+            z-index: 1001;
+            padding: 15px 45px;
             background: var(--accent-pink);
             color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            margin: 10px 5px;
-            font-size: 0.9rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.4rem;
+            box-shadow: 0 10px 25px rgba(228, 161, 161, 0.4);
+            font-family: 'Reem Kufi', sans-serif;
             transition: 0.3s;
         }
 
-        .btn-location:hover {
-            opacity: 0.8;
-        }
+        .open-btn:hover { transform: scale(1.1); }
 
-        .footer {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: var(--accent-pink);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="verse">
-            "فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ" (مت 19: 5-6)
-        </div>
-        
-        <h1>دعوة زفاف</h1>
-        
-        <div class="names">
-            بيمن & ايلاريا
-        </div>
-
-        <div class="details-box">
-            <p style="font-size: 1.3rem;">يتشرفون بدعوتكم لحضور حفل الزفاف</p>
-            <p>الخميس 17 سبتمبر 2026</p>
-            <p>الساعة 8:00 مساءً</p>
-            
-            <p><b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
-            <a href="http://maps.google.com/?q=كنيسة رئيس الملائكة ميخائيل" class="btn-location">لوكيشن الكنيسة</a>
-            
-            <p style="margin-top:20px;"><b>السهرة:</b> قاعة رويال بلازا (دار ضباط الأمن المركزي)</p>
-            <a href="http://maps.google.com/?q=قاعة رويال بلازا" class="btn-location">لوكيشن القاعة</a>
-        </div>
-
-        <div id="timer" class="countdown">
-            <div class="time-unit"><span id="days">0</span>أيام</div>
-            <div class="time-unit"><span id="hours">0</span>ساعة</div>
-            <div class="time-unit"><span id="minutes">0</span>دقيقة</div>
-        </div>
-
-        <div class="footer">حضوركم يتمم فرحتنا ✨</div>
-    </div>
-
-    <script>
-        const weddingDate = new Date("Sept 17, 2026 20:00:00").getTime();
-
-        const x = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-            document.getElementById("days").innerHTML = days;
-            document.getElementById("hours").innerHTML = hours;
-            document.getElementById("minutes").innerHTML = minutes;
-
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("timer").innerHTML = "اليوم هو اليوم المنشود!";
-            }
-        }, 1000);
-    </script>
+        /* الورد المتساقط */
+        .flower { position: fixed; top: -10%; z-index:
 </body>
 </html>
