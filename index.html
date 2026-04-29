@@ -2,20 +2,20 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>دعوة فرح</title>
+<title>دعوة زفاف</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&family=Amiri&display=swap" rel="stylesheet">
 
 <style>
-body {
+body{
 margin:0;
 font-family:'Cairo', sans-serif;
-background:#fff;
+background:white;
 overflow:hidden;
 }
 
 /* شاشة البداية */
-#startScreen {
+#startScreen{
 position:fixed;
 width:100%;
 height:100%;
@@ -24,10 +24,10 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-z-index:10;
+z-index:20;
 }
 
-button {
+button{
 padding:15px 40px;
 font-size:20px;
 border:none;
@@ -37,82 +37,94 @@ border-radius:30px;
 cursor:pointer;
 }
 
-/* ورود نازلة */
-.flower {
-position:absolute;
-top:-50px;
-color:pink;
-animation:fall 6s linear infinite;
-}
-
-@keyframes fall {
-to { transform:translateY(110vh); }
-}
-
 /* الدعوة */
-#invitation {
+#invitation{
 display:none;
 text-align:center;
 padding:30px;
+position:relative;
+z-index:5;
 }
 
-.card {
+.card{
 background:linear-gradient(white,#ffe6f0);
-margin:50px auto;
+margin:60px auto;
 width:85%;
 max-width:500px;
 padding:25px;
 border-radius:20px;
 box-shadow:0 0 20px rgba(0,0,0,0.1);
-animation:open 1.5s ease;
+animation:open 1.2s ease;
 }
 
-@keyframes open {
-0% {transform:scaleX(0);}
-100% {transform:scaleX(1);}
+@keyframes open{
+0%{transform:scaleX(0);}
+100%{transform:scaleX(1);}
 }
 
-h1 {
+h1{
 font-size:28px;
+color:#000;
 }
 
-.small {
+p{
+color:#000;
+}
+
+.small{
 font-size:14px;
 color:#333;
+}
+
+.countdown{
+font-size:12px;
+color:#555;
 margin-top:10px;
 }
 
-.countdown {
-font-size:12px;
-margin-top:10px;
-color:#555;
+/* 🌸 الورود المتحركة */
+.flower{
+position:fixed;
+top:-50px;
+font-size:20px;
+color:pink;
+animation:fall linear infinite;
+z-index:1;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(360deg);
+}
 }
 </style>
 </head>
 
 <body>
 
+<!-- زر البداية -->
 <div id="startScreen">
 <h2>💌 عندك دعوة</h2>
 <button onclick="openInvite()">OPEN</button>
 </div>
 
+<!-- الدعوة -->
 <div id="invitation">
 
 <div class="card">
 
 <h1>بيمن ♥ إيلاريا</h1>
 
-<p class="small">
-يوم الخميس 17/9/2026 الساعة 8 مساءً
+<p class="small">يوم الخميس 17/9/2026 الساعة 8 مساءً</p>
+
+<p>
+الكنيسة:
+<a href="https://maps.app.goo.gl/dkr25pM3ahtUpcbQ9" target="_blank">رئيس الملائكة ميخائيل</a>
 </p>
 
 <p>
-الكنيسة: <a href="https://maps.app.goo.gl/dkr25pM3ahtUpcbQ9" target="_blank">رئيس الملائكة ميخائيل</a>
-</p>
-
-<p>
-القاعة: <a href="https://maps.app.goo.gl/PeWPoRHqrrmeuEEKA" target="_blank">رويال بلازا</a>
+القاعة:
+<a href="https://maps.app.goo.gl/PeWPoRHqrrmeuEEKA" target="_blank">رويال بلازا</a>
 </p>
 
 <p style="font-family:'Amiri'; font-size:18px; margin-top:20px;">
@@ -127,63 +139,62 @@ color:#555;
 
 </div>
 
-<<div id="ytplayer" style="display:none;"></div>
-
+<!-- يوتيوب -->
+<div id="ytplayer" style="display:none;"></div>
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
 let player;
 
-function onYouTubeIframeAPIReady() {
-player = new YT.Player('ytplayer', {
-height: '0',
-width: '0',
-videoId: '49kzVeoM7Ro',
-events: {
-'onReady': function(event){
-event.target.setVolume(50);
-event.target.playVideo();
-}
+/* تشغيل الأغنية */
+function onYouTubeIframeAPIReady(){
+player = new YT.Player('ytplayer',{
+height:'0',
+width:'0',
+videoId:'49kzVeoM7Ro',
+playerVars:{
+autoplay:1,
+loop:1,
+playlist:'49kzVeoM7Ro'
 },
-playerVars: {
-'autoplay': 1,
-'loop': 1,
-'playlist': '49kzVeoM7Ro'
+events:{
+'onReady': e=>{
+e.target.setVolume(40);
+e.target.playVideo();
+}
 }
 });
 }
-</script>
 
-<script>
-
-// فتح الدعوة
+/* فتح الدعوة */
 function openInvite(){
 document.getElementById('startScreen').style.display='none';
 document.getElementById('invitation').style.display='block';
-document.getElementById('song').play();
 startFlowers();
 }
 
-// ورود نازلة
+/* 🌸 ورود مستمرة قبل وبعد الفتح */
 function startFlowers(){
 setInterval(()=>{
 let f=document.createElement('div');
 f.className='flower';
 f.innerHTML='🌸';
 f.style.left=Math.random()*100+'vw';
+f.style.animationDuration=(3+Math.random()*3)+'s';
 document.body.appendChild(f);
-setTimeout(()=>f.remove(),6000);
-},300);
+
+setTimeout(()=>f.remove(),7000);
+},200);
 }
 
-// عد تنازلي بسيط
+/* عد تنازلي بسيط */
 let eventDate = new Date("2026-09-17T20:00:00").getTime();
 
 setInterval(()=>{
 let now = new Date().getTime();
 let diff = eventDate - now;
-
 let days = Math.floor(diff/(1000*60*60*24));
+
 document.getElementById("countdown").innerHTML =
 "باقي على الفرح: " + days + " يوم";
 },1000);
