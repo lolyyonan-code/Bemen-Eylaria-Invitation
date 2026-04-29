@@ -127,9 +127,32 @@ color:#555;
 
 </div>
 
-<audio id="song" loop>
-<source src="song.mp3" type="audio/mp3">
-</audio>
+<<div id="ytplayer" style="display:none;"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let player;
+
+function onYouTubeIframeAPIReady() {
+player = new YT.Player('ytplayer', {
+height: '0',
+width: '0',
+videoId: '49kzVeoM7Ro',
+events: {
+'onReady': function(event){
+event.target.setVolume(50);
+event.target.playVideo();
+}
+},
+playerVars: {
+'autoplay': 1,
+'loop': 1,
+'playlist': '49kzVeoM7Ro'
+}
+});
+}
+</script>
 
 <script>
 
