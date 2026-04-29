@@ -1,878 +1,171 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة زفاف بيمن & ايلاريا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --pink-soft: #fce4ec;
-            --pink-accent: #f06292;
-            --white: #ffffff;
-            --text-black: #000000;
-        }
+<meta charset="UTF-8">
+<title>دعوة فرح</title>
 
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow-x: hidden; font-family: 'Cairo', sans-serif;
-            background-color: var(--white);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&family=Amiri&display=swap" rel="stylesheet">
 
-        /* شاشة الافتتاح والورد المتساقط */
-        #envelope-wrapper {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--white); display: flex;
-            justify-content: center; align-items: center; z-index: 1000;
-        }
+<style>
+body {
+margin:0;
+font-family:'Cairo', sans-serif;
+background:#fff;
+overflow:hidden;
+}
 
-        .flower {
-            position: absolute; top: -50px; color: #ffb7c5;
-            font-size: 20px; user-select: none; pointer-events: none;
-            animation: fall linear infinite;
-        }
-        @keyframes fall {
-            to { transform: translateY(100vh) rotate(360deg); }
-        }
+/* شاشة البداية */
+#startScreen {
+position:fixed;
+width:100%;
+height:100%;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:10;
+}
 
-        .open-btn {
-            padding: 12px 35px; font-size: 1.2rem; background-color: var(--white);
-            color: var(--pink-accent); border: 2px solid var(--pink-accent);
-            border-radius: 5px; cursor: pointer; z-index: 1001;
-            font-family: 'Cairo', sans-serif; transition: 0.3s;
-        }
-        .open-btn:hover { background-color: var(--pink-accent); color: white; }
+button {
+padding:15px 40px;
+font-size:20px;
+border:none;
+background:pink;
+color:white;
+border-radius:30px;
+cursor:pointer;
+}
 
-        /* تأثير الانقسام */
-        .split-left, .split-right {
-            position: absolute; top: 0; width: 50%; height: 100%;
-            background: var(--white); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .split-left { left: 0; } .split-right { right: 0; }
+/* ورود نازلة */
+.flower {
+position:absolute;
+top:-50px;
+color:pink;
+animation:fall 6s linear infinite;
+}
 
-        .opened .split-left { transform: translateX(-100%); }
-        .opened .split-right { transform: translateX(100%); }
-        .opened .open-btn { display: none; }
+@keyframes fall {
+to { transform:translateY(110vh); }
+}
 
-        /* محتوى الدعوة */
-        #invitation-content {
-            padding: 50px 20px; text-align: center; opacity: 0;
-            background-color: var(--white); min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-        }
-        .opened ~ #invitation-content { opacity: 1; transition: opacity 2s ease-in 0.5s; }
+/* الدعوة */
+#invitation {
+display:none;
+text-align:center;
+padding:30px;
+}
 
-        .verse {
-            font-family: 'Amiri', serif; font-size: 1.5rem;
-            color: var(--text-black); margin-bottom: 40px;
-            max-width: 80%; line-height: 1.6;
-        }
+.card {
+background:linear-gradient(white,#ffe6f0);
+margin:50px auto;
+width:85%;
+max-width:500px;
+padding:25px;
+border-radius:20px;
+box-shadow:0 0 20px rgba(0,0,0,0.1);
+animation:open 1.5s ease;
+}
 
-        .names {
-            font-size: 2.8rem; font-weight: bold; color: var(--pink-accent);
-            margin: 20px 0; border-top: 1px solid var(--pink-soft);
-            border-bottom: 1px solid var(--pink-soft); padding: 10px 0;
-        }
+@keyframes open {
+0% {transform:scaleX(0);}
+100% {transform:scaleX(1);}
+}
 
-        .details { font-size: 1.3rem; margin: 15px 0; color: var(--text-black); }
+h1 {
+font-size:28px;
+}
 
-        .location-card {
-            margin: 20px 0; padding: 15px; border-radius: 10px;
-            background: #fffcfd; border: 1px solid var(--pink-soft);
-            width: 85%; max-width: 400px;
-        }
-        .location-card a { color: var(--pink-accent); text-decoration: none; font-weight: bold; }
+.small {
+font-size:14px;
+color:#333;
+margin-top:10px;
+}
 
-        #countdown {
-            font-size: 0.85rem; color: #888; margin: 20px 0;
-            letter-spacing: 1px;
-        }
-    </style>
+.countdown {
+font-size:12px;
+margin-top:10px;
+color:#555;
+}
+</style>
 </head>
+
 <body>
 
-    <div id="envelope-wrapper">
-        <div class="split-left"></div>
-        <div class="split-right"></div>
-        <button class="open-btn" onclick="openInvitation()">Open</button>
-    </div>
+<div id="startScreen">
+<h2>💌 عندك دعوة</h2>
+<button onclick="openInvite()">OPEN</button>
+</div>
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+<div id="invitation">
 
-    <div id="invitation-content">
-        <div class="verse">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ" (مت 19: 5-6)</div>
-        
-        <div class="names">بيمن & ايلاريا</div>
-        
-        <div class="details">
-            يوم الخميس 17/9/2026<br>
-            الساعة 8 مساءً
-        </div>
+<div class="card">
 
-        <div id="countdown"></div>
+<h1>بيمن ♥ إيلاريا</h1>
 
-        <div class="location-card">
-            كنيسة رئيس الملائكة ميخائيل<br>
-            <a href="https://maps.app.goo.gl/dkr25pM3ahtUpcbQ9" target="_blank">📍 عرض الموقع على الخريطة</a>
-        </div>
+<p class="small">
+يوم الخميس 17/9/2026 الساعة 8 مساءً
+</p>
 
-        <div class="location-card">
-            قاعة رويال بلازا (دار ضباط الأمن المركزي)<br>
-            <a href="https://maps.app.goo.gl/PeWPoRHqrrmeuEEKA" target="_blank">📍 عرض الموقع على الخريطة</a>
-        </div>
-    </div>
+<p>
+الكنيسة: <a href="https://maps.app.goo.gl/dkr25pM3ahtUpcbQ9" target="_blank">رئيس الملائكة ميخائيل</a>
+</p>
 
-    <script>
-        function openInvitation() {
-            document.getElementById('envelope-wrapper').classList.add('opened');
-            document.getElementById('bgMusic').play();
-            setTimeout(() => {
-                document.getElementById('envelope-wrapper').style.pointerEvents = 'none';
-            }, 1200);
-        }
+<p>
+القاعة: <a href="https://maps.app.goo.gl/PeWPoRHqrrmeuEEKA" target="_blank">رويال بلازا</a>
+</p>
 
-        // إنشاء الورد المتساقط
-        function createFlower() {
-            const flowers = ['🌸', '💮', '🌹'];
-            const flower = document.createElement('div');
-            flower.classList.add('flower');
-            flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.animationDuration = Math.random() * 3 + 2 + 's';
-            document.getElementById('envelope-wrapper').appendChild(flower);
-            setTimeout(() => flower.remove(), 5000);
-        }
-        setInterval(createFlower, 300);
+<p style="font-family:'Amiri'; font-size:18px; margin-top:20px;">
+"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"
+<br>
+(مت 19: 5-6)
+</p>
 
-        // عد تنازلي بسيط
-        const weddingDate = new Date("Sep 17, 2026 20:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("countdown").innerHTML = "متبقي: " + days + " يوم، " + hours + " ساعة، " + minutes + " دقيقة";
-        }, 1000);
-    </script>
-</body>
-</html>
+<div class="countdown" id="countdown"></div>
 
-        .open-btn {
-            z-index: 1001;
-            padding: 15px 45px;
-            background: var(--accent-pink);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.4rem;
-            box-shadow: 0 10px 25px rgba(228, 161, 161, 0.4);
-            font-family: 'Reem Kufi', sans-serif;
-            transition: 0.3s;
-        }
+</div>
 
-        /* الورد المتساقط */
-        .flower { position: fixed; top: -10%; z-index: 999; animation: fall linear forwards; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+</div>
 
-        /* المحتوى الرئيسي */
-        .main-content {
-            opacity: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            transition: 2s;
-            visibility: hidden;
-        }
+<audio id="song" loop>
+<source src="song.mp3" type="audio/mp3">
+</audio>
 
-        .container {
-            max-width: 450px;
-            width: 100%;
-            background: white;
-            padding: 40px 20px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-            border: 1px solid var(--primary-pink);
-        }
+<script>
 
-        .names { font-family: 'Reem Kufi', sans-serif; font-size: 2.8rem; color: var(--accent-pink); margin: 20px 0; }
+// فتح الدعوة
+function openInvite(){
+document.getElementById('startScreen').style.display='none';
+document.getElementById('invitation').style.display='block';
+document.getElementById('song').play();
+startFlowers();
+}
 
-        .countdown { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
-        .time-unit { background: var(--primary-pink); padding: 12px; border-radius: 15px; min-width: 65px; }
-        .time-unit span { display: block; font-size: 1.6rem; font-weight: bold; color: var(--text-color); }
+// ورود نازلة
+function startFlowers(){
+setInterval(()=>{
+let f=document.createElement('div');
+f.className='flower';
+f.innerHTML='🌸';
+f.style.left=Math.random()*100+'vw';
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),6000);
+},300);
+}
 
-        /* حالة الفتح */
-        .opened .split-left { transform: translateX(-100%); }
-        .opened .split-right { transform: translateX(100%); }
-        .opened .main-content { opacity: 1; visibility: visible; }
-        .opened .open-btn { opacity: 0; pointer-events: none; }
-    </style>
-</head>
-<body>
+// عد تنازلي بسيط
+let eventDate = new Date("2026-09-17T20:00:00").getTime();
 
-    <audio id="bgMusic" loop>
-        <source src="https://files.catbox.moe/kuz9n0.mp3" type="audio/mpeg">
-    </audio>
+setInterval(()=>{
+let now = new Date().getTime();
+let diff = eventDate - now;
 
-    <div id="splash-screen">
-        <div class="split-left"></div>
-        <div class="split-right"></div>
-        <button class="open-btn" onclick="openInvitation()">دعوة من القلب.. افتحيها 🌸</button>
-    </div>
+let days = Math.floor(diff/(1000*60*60*24));
+document.getElementById("countdown").innerHTML =
+"باقي على الفرح: " + days + " يوم";
+},1000);
 
-    <div class="main-content">
-        <div class="container">
-            <p style="color: var(--accent-pink); font-size: 1.2rem;">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"</p>
-            
-            <h2 style="font-weight: normal; margin-top: 30px;">فرحة العمر</h2>
-            <div class="names">بيمن & ايلاريا</div>
+</script>
 
-            <div style="line-height: 1.8; font-size: 1.2rem;">
-                <p>الخميس 17 سبتمبر 2026</p>
-                <p>الساعة 8:00 مساءً</p>
-                <p>📍 <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
-                <p>🏨 <b>السهرة:</b> قاعة رويال بلازا</p>
-            </div>
-
-            <div id="timer" class="countdown">
-                <div class="time-unit"><span id="days">0</span>يوم</div>
-                <div class="time-unit"><span id="hours">0</span>ساعة</div>
-                <div class="time-unit"><span id="minutes">0</span>دقيقة</div>
-            </div>
-
-            <p style="color: var(--accent-pink); font-size: 1.3rem;">حضوركم يتمم فرحتنا ✨</p>
-        </div>
-    </div>
-
-    <script>
-        function openInvitation() {
-            document.body.classList.add('opened');
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("الموسيقى جاهزة عند التفاعل"));
-            
-            setTimeout(() => {
-                document.getElementById('splash-screen').style.display = 'none';
-            }, 1200);
-        }
-
-        // تساقط الورد
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.classList.add('flower');
-            const flowers = ['🌸', '🌷', '🤍'];
-            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.animationDuration = Math.random() * 3 + 3 + 's';
-            flower.style.fontSize = Math.random() * 10 + 15 + 'px';
-            document.body.appendChild(flower);
-            setTimeout(() => flower.remove(), 6000);
-        }
-        setInterval(createFlower, 400);
-
-        // العد التنازلي
-        const weddingDate = new Date("Sept 17, 2026 20:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            if (distance > 0) {
-                document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-                document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            }
-        }, 1000);
-    </script>
-</body>
-</html>
-
-        .open-btn {
-            z-index: 1001;
-            padding: 15px 45px;
-            background: var(--accent-pink);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.4rem;
-            box-shadow: 0 10px 25px rgba(228, 161, 161, 0.4);
-            font-family: 'Cairo', Cairo;
-            transition: 0.3s;
-        }
-
-        /* الورد المتساقط */
-        .flower { position: fixed; top: -10%; z-index: 999; animation: fall linear forwards; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* المحتوى الرئيسي */
-        .main-content {
-            opacity: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            transition: 2s;
-            visibility: hidden;
-        }
-
-        .container {
-            max-width: 450px;
-            width: 100%;
-            background: white;
-            padding: 40px 20px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-            border: 1px solid var(--primary-pink);
-        }
-
-        .names { font-family: 'Cairo', Cairo; font-size: 2.8rem; color: var(--accent-pink); margin: 20px 0; }
-
-        .countdown { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
-        .time-unit { background: var(--primary-pink); padding: 12px; border-radius: 15px; min-width: 65px; }
-        .time-unit span { display: block; font-size: 1.6rem; font-weight: bold; color: var(--text-color); }
-
-        /* حالة الفتح */
-        .opened .split-left { transform: translateX(-100%); }
-        .opened .split-right { transform: translateX(100%); }
-        .opened .main-content { opacity: 1; visibility: visible; }
-        .opened .open-btn { opacity: 0; pointer-events: none; }
-    </style>
-</head>
-<body>
-
-    <audio id="bgMusic" loop>
-        <source src="https://files.catbox.moe/kuz9n0.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="splash-screen">
-        <div class="split-left"></div>
-        <div class="split-right"></div>
-        <button class="open-btn" onclick="openInvitation()">دعوة من القلب.. افتحيها 🌸</button>
-    </div>
-
-    <div class="main-content">
-        <div class="container">
-            <p style="color: var(--accent-pink); font-size: 1.2rem;">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"</p>
-            
-            <h2 style="font-weight: normal; margin-top: 30px;">فرحة العمر</h2>
-            <div class="names">بيمن & ايلاريا</div>
-
-            <div style="line-height: 1.8; font-size: 1.2rem;">
-                <p>الخميس 17 سبتمبر 2026</p>
-                <p>الساعة 8:00 مساءً</p>
-                <p>📍 <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
-                <p>🏨 <b>السهرة:</b> قاعة رويال بلازا</p>
-            </div>
-
-            <div id="timer" class="countdown">
-                <div class="time-unit"><span id="days">0</span>يوم</div>
-                <div class="time-unit"><span id="hours">0</span>ساعة</div>
-                <div class="time-unit"><span id="minutes">0</span>دقيقة</div>
-            </div>
-
-            <p style="color: var(--accent-pink); font-size: 1.3rem;">حضوركم يتمم فرحتنا ✨</p>
-        </div>
-    </div>
-
-    <script>
-        function openInvitation() {
-            document.body.classList.add('opened');
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("الموسيقى جاهزة عند التفاعل"));
-            
-            setTimeout(() => {
-                document.getElementById('splash-screen').style.display = 'none';
-            }, 1200);
-        }
-
-        // تساقط الورد
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.classList.add('flower');
-            const flowers = ['🌸', '🌷', '🤍'];
-            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.animationDuration = Math.random() * 3 + 3 + 's';
-            flower.style.fontSize = Math.random() * 10 + 15 + 'px';
-            document.body.appendChild(flower);
-            setTimeout(() => flower.remove(), 6000);
-        }
-        setInterval(createFlower, 400);
-
-        // العد التنازلي
-        const weddingDate = new Date("Sept 17, 2026 20:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            if (distance > 0) {
-                document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-                document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            }
-        }, 1000);
-    </script>
-</body>
-</html>
-            line-height: 2;
-            font-size: 1.1rem;
-            color: var(--text-color);
-        }
-
-        .event-details b {
-            color: var(--accent-pink);
-            font-weight: 700;
-        }
-
-        /* ستايل العداد */
-        .countdown { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
-        .time-unit { 
-            background: #fff; 
-            padding: 10px; 
-            border-radius: 10px; 
-            min-width: 70px; 
-            border: 1px solid var(--primary-pink);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-        }
-        .time-unit span { 
-            display: block; 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-            color: var(--accent-pink);
-            font-family: 'El Messiri';
-        }
-        .time-unit label {
-            font-size: 0.8rem;
-            color: #999;
-        }
-
-        .footer-msg {
-            font-family: 'El Messiri', El Messiri;
-            color: var(--accent-pink);
-            font-size: 1.4rem;
-            margin-top: 20px;
-        }
-
-        /* حالة الفتح */
-        .opened .split-left { transform: translateX(-100%); }
-        .opened .split-right { transform: translateX(100%); }
-        .opened .main-content { opacity: 1; visibility: visible; }
-        .opened .open-btn { opacity: 0; pointer-events: none; }
-    </style>
-</head>
-<body>
-
-    <audio id="bgMusic" loop>
-        <source src="https://files.catbox.moe/kuz9n0.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="splash-screen">
-        <div class="split-left"></div>
-        <div class="split-right"></div>
-        <button class="open-btn" onclick="openInvitation()">دَعوة زَفاف</button>
-    </div>
-
-    <div class="main-content">
-        <div class="container">
-            <div class="verse">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"</div>
-            
-            <div class="main-title">بكل حب ندعوكم لـ</div>
-            <div class="names">بيمن & ايلاريا</div>
-
-            <div class="event-details">
-                <p>يوم <b>الخميس</b> الموافق 17 سبتمبر 2026</p>
-                <p>في تمام الساعة <b>الثامنة</b> مساءً</p>
-                <p>📍 <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
-                <p>🏨 <b>السهرة:</b> قاعة رويال بلازا</p>
-            </div>
-
-            <div id="timer" class="countdown">
-                <div class="time-unit"><span id="days">0</span><label>أيام</label></div>
-                <div class="time-unit"><span id="hours">0</span><label>ساعة</label></div>
-                <div class="time-unit"><span id="minutes">0</span><label>دقيقة</label></div>
-            </div>
-
-            <div class="footer-msg">حضوركم يتمم فرحتنا ✨</div>
-        </div>
-    </div>
-
-    <script>
-        function openInvitation() {
-            document.body.classList.add('opened');
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("الموسيقى جاهزة"));
-            
-            setTimeout(() => {
-                document.getElementById('splash-screen').style.display = 'none';
-            }, 1200);
-        }
-
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.classList.add('flower');
-            const flowers =
-            padding: 40px 20px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-            border: 1px solid var(--primary-pink);
-        }
-
-        .names { font-family: 'Reem Kufi', sans-serif; font-size: 2.8rem; color: var(--accent-pink); margin: 20px 0; }
-
-        .countdown { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
-        .time-unit { background: var(--primary-pink); padding: 12px; border-radius: 15px; min-width: 65px; }
-        .time-unit span { display: block; font-size: 1.6rem; font-weight: bold; color: var(--text-color); }
-
-        /* حالة الفتح */
-        .opened .split-left { transform: translateX(-100%); }
-        .opened .split-right { transform: translateX(100%); }
-        .opened .main-content { opacity: 1; visibility: visible; }
-        .opened .open-btn { opacity: 0; pointer-events: none; }
-    </style>
-</head>
-<body>
-
-    <audio id="bgMusic" loop>
-        <source src="https://files.catbox.moe/kuz9n0.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="splash-screen">
-        <div class="split-left"></div>
-        <div class="split-right"></div>
-        <button class="open-btn" onclick="openInvitation()">دعوة من القلب.. افتحيها 🌸</button>
-    </div>
-
-    <div class="main-content">
-        <div class="container">
-            <p style="color: var(--accent-pink); font-size: 1.2rem;">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"</p>
-            
-            <h2 style="font-weight: normal; margin-top: 30px;">فرحة العمر</h2>
-            <div class="names">بيمن & ايلاريا</div>
-
-            <div style="line-height: 1.8; font-size: 1.2rem;">
-                <p>الخميس 17 سبتمبر 2026</p>
-                <p>الساعة 8:00 مساءً</p>
-                <p>📍 <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
-                <p>🏨 <b>السهرة:</b> قاعة رويال بلازا</p>
-            </div>
-
-            <div id="timer" class="countdown">
-                <div class="time-unit"><span id="days">0</span>يوم</div>
-                <div class="time-unit"><span id="hours">0</span>ساعة</div>
-                <div class="time-unit"><span id="minutes">0</span>دقيقة</div>
-            </div>
-
-            <p style="color: var(--accent-pink); font-size: 1.3rem;">حضوركم يتمم فرحتنا ✨</p>
-        </div>
-    </div>
-
-    <script>
-        function openInvitation() {
-            document.body.classList.add('opened');
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("الموسيقى جاهزة عند التفاعل"));
-            
-            setTimeout(() => {
-                document.getElementById('splash-screen').style.display = 'none';
-            }, 1200);
-        }
-
-        // تساقط الورد
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.classList.add('flower');
-            const flowers = ['🌸', '🌷', '🤍'];
-            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.animationDuration = Math.random() * 3 + 3 + 's';
-            flower.style.fontSize = Math.random() * 10 + 15 + 'px';
-            document.body.appendChild(flower);
-            setTimeout(() => flower.remove(), 6000);
-        }
-        setInterval(createFlower, 400);
-
-        // العد التنازلي
-        const weddingDate = new Date("Sept 17, 2026 20:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            if (distance > 0) {
-                document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-                document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            }
-        }, 1000);
-    </script>
-</body>
-</html>
-
-        .floral-top { width: 150px; margin-bottom: 20px; opacity: 0.8; }
-
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            max-width: 450px;
-            width: 100%;
-            border: 1px solid #eee;
-        }
-
-        .verse { font-size: 1.1rem; color: var(--accent-pink); margin-bottom: 30px; line-height: 1.6; }
-        .title { font-family: 'Reem Kufi', sans-serif; font-size: 1.5rem; color: var(--dark-brown); }
-        .names { font-size: 3rem; color: var(--accent-pink); margin: 20px 0; font-family: 'Reem Kufi', El Messiri; }
-        
-        .info-item { margin: 15px 0; font-size: 1.2rem; color: var(--dark-brown); }
-        .info-item b { color: var(--accent-pink); }
-
-        /* العد التنازلي المودرن */
-        .timer {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-        }
-        .timer-part {
-            background: white;
-            width: 70px;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--soft-pink);
-        }
-        .timer-part span { display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent-pink); }
-
-        .location-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 20px;
-            border: 1px solid var(--accent-pink);
-            color: var(--accent-pink);
-            text-decoration: none;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-        .location-btn:hover { background: var(--accent-pink); color: white; }
-
-        /* حالة الفتح */
-        .opened #gate { pointer-events: none; }
-        .opened .door.left { transform: translateX(-100%); }
-        .opened .door.right { transform: translateX(100%); }
-        .opened .btn-open { opacity: 0; }
-
-        /* ورد متساقط */
-        .petal { position: fixed; top: -10%; z-index: 999; animation: fall linear forwards; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-    </style>
-</head>
-<body id="body">
-
-    <audio id="music" loop>
-        <source src="https://files.catbox.moe/kuz9n0.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="gate">
-        <div class="door left"></div>
-        <button class="btn-open" onclick="openAll()">افتحي الدعوة 🌸</button>
-        <div class="door right"></div>
-    </div>
-
-    <div class="invitation-wrapper">
-        <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" class="floral-top" alt="ورد">
-        
-        <div class="card">
-            <div class="verse">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"<br>(مت 19: 5-6)</div>
-            
-            <div class="title">دعوة زفاف</div>
-            <div class="names">بيمن & ايلاريا</div>
-
-            <div class="info-item">يوم <b>الخميس</b> 17 سبتمبر 2026</div>
-            <div class="info-item">الساعة <b>8:00</b> مساءً</div>
-
-            <hr style="border: 0; border-top: 1px solid #f9f9f9; margin: 20px 0;">
-
-            <div class="info-item">
-                ⛪ <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل<br>
-                <a href="https://maps.google.com/?q=كنيسة+رئيس+الملائكة+ميخائيل" class="location-btn">الموقع على الخريطة</a>
-            </div>
-
-            <div class="info-item" style="margin-top: 25px;">
-                🎊 <b>السهرة:</b> قاعة رويال بلازا<br>
-                <small>(دار ضباط الأمن المركزي)</small><br>
-                <a href="https://maps.google.com/?q=قاعة+رويال+بلازا+دار+ضباط+الامن+المركزي" class="location-btn">الموقع على الخريطة</a>
-            </div>
-
-            <div class="timer">
-                <div class="timer-part"><span id="d">0</span>يوم</div>
-                <div class="timer-part"><span id="h">0</span>ساعة</div>
-                <div class="timer-part"><span id="m">0</span>دقيقة</div>
-            </div>
-
-            <div style="font-size: 1.3rem; color: var(--accent-pink); margin-top: 20px;">حضوركم يتمم فرحتنا ✨</div>
-        </div>
-    </div>
-
-    <script>
-        function openAll() {
-            document.getElementById('body').classList.add('opened');
-            document.getElementById('music').play();
-        }
-
-        // بتلات الورد المتساقطة
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.classList.add('petal');
-            petal.innerHTML = '🌸';
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = Math.random() * 3 + 4 + 's';
-            petal.style.opacity = Math.random() * 0.5 + 0.5;
-            document.body.appendChild(petal);
-            setTimeout(() => petal.remove(), 7000);
-        }
-        setInterval(createPetal, 400);
-
-        // حساب العد التنازلي
-        const target = new Date("Sept 17, 2026 20:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = target - now;
-            document.getElementById("d").innerHTML = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById("h").innerHTML = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("m").innerHTML = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        }, 1000);
-    </script>
-</body>
-</html>
-
-        .open-btn {
-            z-index: 1001;
-            padding: 15px 45px;
-            background: var(--accent-pink);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.4rem;
-            box-shadow: 0 10px 25px rgba(228, 161, 161, 0.4);
-            font-family: 'Reem Kufi', sans-serif;
-            transition: 0.3s;
-        }
-
-        /* الورد المتساقط */
-        .flower { position: fixed; top: -10%; z-index: 999; animation: fall linear forwards; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* المحتوى الرئيسي */
-        .main-content {
-            opacity: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            transition: 2s;
-            visibility: hidden;
-        }
-
-        .container {
-            max-width: 450px;
-            width: 100%;
-            background: white;
-            padding: 40px 20px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-            border: 1px solid var(--primary-pink);
-        }
-
-        .names { font-family: 'Reem Kufi', sans-serif; font-size: 2.8rem; color: var(--accent-pink); margin: 20px 0; }
-
-        .countdown { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
-        .time-unit { background: var(--primary-pink); padding: 12px; border-radius: 15px; min-width: 65px; }
-        .time-unit span { display: block; font-size: 1.6rem; font-weight: bold; color: var(--text-color); }
-
-        /* حالة الفتح */
-        .opened .split-left { transform: translateX(-100%); }
-        .opened .split-right { transform: translateX(100%); }
-        .opened .main-content { opacity: 1; visibility: visible; }
-        .opened .open-btn { opacity: 0; pointer-events: none; }
-    </style>
-</head>
-<body>
-
-    <audio id="bgMusic" loop>
-        <source src="https://files.catbox.moe/kuz9n0.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="splash-screen">
-        <div class="split-left"></div>
-        <div class="split-right"></div>
-        <button class="open-btn" onclick="openInvitation()">دعوة من القلب.. افتحيها 🌸</button>
-    </div>
-
-    <div class="main-content">
-        <div class="container">
-            <p style="color: var(--accent-pink); font-size: 1.2rem;">"فَالَّذِي جَمَعَهُ اللهُ لَا يُفَرِّقُهُ إِنْسَانٌ"</p>
-            
-            <h2 style="font-weight: normal; margin-top: 30px;">فرحة العمر</h2>
-            <div class="names">بيمن & ايلاريا</div>
-
-            <div style="line-height: 1.8; font-size: 1.2rem;">
-                <p>الخميس 17 سبتمبر 2026</p>
-                <p>الساعة 8:00 مساءً</p>
-                <p>📍 <b>الإكليل:</b> كنيسة رئيس الملائكة ميخائيل</p>
-                <p>🏨 <b>السهرة:</b> قاعة رويال بلازا</p>
-            </div>
-
-            <div id="timer" class="countdown">
-                <div class="time-unit"><span id="days">0</span>يوم</div>
-                <div class="time-unit"><span id="hours">0</span>ساعة</div>
-                <div class="time-unit"><span id="minutes">0</span>دقيقة</div>
-            </div>
-
-            <p style="color: var(--accent-pink); font-size: 1.3rem;">حضوركم يتمم فرحتنا ✨</p>
-        </div>
-    </div>
-
-    <script>
-        function openInvitation() {
-            document.body.classList.add('opened');
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("الموسيقى جاهزة عند التفاعل"));
-            
-            setTimeout(() => {
-                document.getElementById('splash-screen').style.display = 'none';
-            }, 1200);
-        }
-
-        // تساقط الورد
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.classList.add('flower');
-            const flowers = ['🌸', '🌷', '🤍'];
-            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.animationDuration = Math.random() * 3 + 3 + 's';
-            flower.style.fontSize = Math.random() * 10 + 15 + 'px';
-            document.body.appendChild(flower);
-            setTimeout(() => flower.remove(), 6000);
-        }
-        setInterval(createFlower, 400);
-
-        // العد التنازلي
-        const weddingDate = new Date("Sept 17, 2026 20:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            if (distance > 0) {
-                document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-                document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            }
-        }, 1000);
-    </script>
 </body>
 </html>
